@@ -1,4 +1,4 @@
-# Watson Convert node for Node-RED
+# Watson Document Convert node for Node-RED
 
 The Watson Convert can be used when a document (Word, PDF ...) needs to be converted into a plain text for further processing of its contents. 
 
