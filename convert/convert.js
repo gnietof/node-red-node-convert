@@ -1,10 +1,9 @@
 module.exports = function(RED) {
 
-	var http = require('http');
 	var https = require('https');
 	
-	var cfEnv = require("cfenv");
-	var util = require("util");
+	var cfEnv = require('cfenv');
+	var util = require('util');
 		
 	var watson = require('watson-developer-cloud');
 	var temp = require('temp');
@@ -31,8 +30,6 @@ module.exports = function(RED) {
 			}));
 		}
 	}
-
-	util.log("*** CONVERT: "+JSON.stringify(converts));
 
 	// GNF: This method provides service credentials when prompted from the node editor
 	RED.httpAdmin.get('/convert/vcap', function(req,res) {
