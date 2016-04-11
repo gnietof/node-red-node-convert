@@ -1,10 +1,6 @@
 module.exports = function(RED) {
 
-	var https = require('https');
-	
 	var cfEnv = require('cfenv');
-	var util = require('util');
-		
 	var watson = require('watson-developer-cloud');
 	var temp = require('temp');
 	var fs = require('fs');
@@ -60,7 +56,7 @@ module.exports = function(RED) {
 			var stream_buffer = function (file, contents, cb) {
 				fs.writeFile(file, contents, function (err) {
 					if (err) {
-						throw err;
+						throw (err);
 					}
 					cb(fileType(contents).ext);
 				});
@@ -71,7 +67,7 @@ module.exports = function(RED) {
 				wstream.on('finish', function () {
 					fs.readFile(file, function (err, buf) {
 						if (err) {
-							trow (err);
+							throw (err);
 						}			
 						cb(fileType(buf).ext);
 					});
@@ -82,12 +78,12 @@ module.exports = function(RED) {
 			
 			temp.open({suffix: '.cvt'}, function (err, info) {
 				if (err) {
-					throw err;
+					throw (err);
 				}	
 			
 				var stream_payload = (typeof msg.payload === 'string') ? stream_url : stream_buffer;
 			
-				stream_payload(info.path, msg.payload, function (format) {
+				stream_payload(info.path, msg.payload, function () {
 					
 					// convert a document
 					document_conversion.convert({
@@ -101,7 +97,7 @@ module.exports = function(RED) {
 						
 					}, function (err, response) {
 						if (err) {
-							node.error(err);
+							throw(err);
 						} else {
 							node.send({'payload' : response});
 						}
