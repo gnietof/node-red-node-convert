@@ -59,7 +59,9 @@ module.exports = function(RED) {
 			
 			var stream_buffer = function (file, contents, cb) {
 				fs.writeFile(file, contents, function (err) {
-					if (err) throw err;
+					if (err) {
+						throw err;
+					}
 					cb(fileType(contents).ext);
 				});
 			};
@@ -68,7 +70,9 @@ module.exports = function(RED) {
 				var wstream = fs.createWriteStream(file);
 				wstream.on('finish', function () {
 					fs.readFile(file, function (err, buf) {
-						if (err) console.error(err);
+						if (err) {
+							trow (err);
+						}			
 						cb(fileType(buf).ext);
 					});
 				});
@@ -77,7 +81,9 @@ module.exports = function(RED) {
 			};
 			
 			temp.open({suffix: '.cvt'}, function (err, info) {
-				if (err) throw err;
+				if (err) {
+					throw err;
+				}	
 			
 				var stream_payload = (typeof msg.payload === 'string') ? stream_url : stream_buffer;
 			
@@ -97,7 +103,7 @@ module.exports = function(RED) {
 						if (err) {
 							node.error(err);
 						} else {
-							node.send({"payload" : response});
+							node.send({'payload' : response});
 						}
 					});
 				});
@@ -106,12 +112,12 @@ module.exports = function(RED) {
 		};
 
 		this.on('input', function (msg) {
-			 this.doCall(msg);
+			this.doCall(msg);
 		});
 				
 	}
 
-	RED.nodes.registerType("convert",ConvertNode);
+	RED.nodes.registerType('convert',ConvertNode);
 
 };
 
